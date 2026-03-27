@@ -2,6 +2,7 @@ class AppImages {
   AppImages._();
 
   static const String doc = "assets/images/onboarding_doc.png";
+  static const String splash = "assets/images/splash_screen.png";
 }
 
 class AppSvg {

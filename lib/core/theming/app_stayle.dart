@@ -1,3 +1,4 @@
+import 'package:advanced/core/theming/fonts_weight.dart';
 import 'package:flutter/material.dart';
 import 'package:advanced/core/theming/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,14 +13,39 @@ class AppStyle {
     fontSize: 32.sp,
     color: AppColors.primary,
     fontWeight: FontWeight.bold,
-  );  static TextStyle text13GryW400 = TextStyle(
+  ); static TextStyle text24BlueBold = TextStyle(
+    fontSize: 32.sp,
+    color: AppColors.primary,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle text13GryRegular = TextStyle(
     fontSize: 13.sp,
     color: AppColors.gry,
-    fontWeight: FontWeight.w400,
-  ); static TextStyle text16GryW600 =  TextStyle(
+    fontWeight: FontWeightHelper.regular,
+  );static TextStyle text12PrimaryRegular = TextStyle(
+    fontSize: 12.sp,
+    color: AppColors.primary,
+    fontWeight: FontWeightHelper.regular,
+  );static TextStyle text14GryRegular = TextStyle(
+    fontSize: 14.sp,
+    color: AppColors.gry,
+    fontWeight: FontWeightHelper.regular,
+  );static TextStyle text14PrimaryBold = TextStyle(
+    fontSize: 14.sp,
+    color: AppColors.primary,
+    fontWeight: FontWeightHelper.bold,
+  );static TextStyle text14LightGryRegular = TextStyle(
+    fontSize: 14.sp,
+    color: AppColors.lightGray,
+    fontWeight: FontWeightHelper.regular,
+  );static TextStyle text14DarkBlueMedium = TextStyle(
+    fontSize: 14.sp,
+    color: AppColors.darkBlue,
+    fontWeight: FontWeightHelper.medium,
+  );
+  static TextStyle text16GrySemiBold = TextStyle(
     color: Colors.white,
     fontSize: 16,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeightHelper.semiBold,
   );
-
 }
