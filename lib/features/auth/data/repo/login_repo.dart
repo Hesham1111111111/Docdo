@@ -1,6 +1,7 @@
+import 'package:advanced/features/auth/data/model/login_request_body.dart';
+import 'package:advanced/features/auth/data/model/login_response.dart';
 import '../../../../core/networking/api_result.dart';
-import '../model/auth_model.dart';
 
-abstract class AuthRepo {
-  Future<ApiResult<AuthModel>> login(AuthModel authModel);
-  }
+abstract class LoginRepo {
+  Future<ApiResult<LoginResponse>> login(LoginRequestBody loginRequest);
+}

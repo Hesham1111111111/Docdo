@@ -1,6 +1,8 @@
-import 'package:dartz/dartz.dart' show Right, Left;
+import 'package:advanced/core/networking/api_result.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../helpers/locale_keys.dart';
 import 'api_failure.dart';
 import 'api_services.dart';
 
@@ -11,12 +13,11 @@ class ApiClient {
 
   ApiClient(this.apiService);
 
-  Future<dynamic> request<T>({
+  Future<ApiResult<T>> request<T>({
     required ApiMethods method,
     required String endpoint,
     Map<String, dynamic>? queryParameters,
     dynamic body,
-    Map<String, dynamic>? headers,
     required T Function(dynamic json) response,
   }) async {
     try {
@@ -31,15 +32,17 @@ class ApiClient {
           break;
 
         case ApiMethods.POST:
-          responseData =
-          await apiService.post(endpoint: endpoint, data: body);
+          responseData = await apiService.post(
+            endpoint: endpoint,
+            data: body,
+          );
           break;
 
         case ApiMethods.PUT:
           responseData = await apiService.put(
             endpoint: endpoint,
-            queryParameters: queryParameters,
             data: body,
+            queryParameters: queryParameters,
           );
           break;
 
@@ -53,18 +56,38 @@ class ApiClient {
         case ApiMethods.PATCH:
           responseData = await apiService.patch(
             endpoint: endpoint,
-            queryParameters: queryParameters,
             data: body,
+            queryParameters: queryParameters,
           );
           break;
       }
 
-      return Right(response(responseData));
-    } catch (e) {
-      if (e is DioException) {
-        return Left(ServerFailure.fromDioException(e));
+      // 🛑 Empty response check
+      if (responseData == null) {
+        return ApiResult.failure("Empty response from server");
       }
-      return Left(ServerFailure(e.toString()));
+
+      // 🛑 Safe parsing layer
+      try {
+        final parsed = response(responseData);
+        return ApiResult.success(parsed);
+      } catch (_) {
+        return ApiResult.failure("Data parsing failed");
+      }
+    }
+
+    // 🔥 Main error handling (your ServerFailure)
+    on DioException catch (e) {
+      return ApiResult.failure(
+        ServerFailure.fromDioException(e).message,
+      );
+    }
+
+    // 🔥 fallback unexpected errors
+    catch (_) {
+      return ApiResult.failure(
+        ServerFailure(LocaleKeys.unknown.tr()).message,
+      );
     }
   }
 }

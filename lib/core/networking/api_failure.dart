@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import '../helpers/locale_keys.dart';
 
 abstract class Failure {
@@ -28,18 +27,11 @@ class ServerFailure extends Failure {
       case DioExceptionType.cancel:
         return ServerFailure(LocaleKeys.cancelError.tr());
       case DioExceptionType.connectionError:
-        return _isNetworkError(error)
-            ? ServerFailure(LocaleKeys.noInternet.tr())
-            : ServerFailure(LocaleKeys.connectionError.tr());
+        return _isNetworkError(error) ? ServerFailure(LocaleKeys.noInternet.tr()) : ServerFailure(LocaleKeys.connectionError.tr());
       case DioExceptionType.badResponse:
-        return ServerFailure.fromResponse(
-          statusCode: error.response?.statusCode ?? 500,
-          data: error.response?.data,
-        );
+        return ServerFailure.fromResponse(statusCode: error.response?.statusCode ?? 500, data: error.response?.data);
       case DioExceptionType.unknown:
-        return _isNetworkError(error)
-            ? ServerFailure(LocaleKeys.noInternet.tr())
-            : ServerFailure(LocaleKeys.unknown.tr());
+        return _isNetworkError(error) ? ServerFailure(LocaleKeys.noInternet.tr()) : ServerFailure(LocaleKeys.unknown.tr());
     }
   }
 
@@ -62,9 +54,7 @@ class ServerFailure extends Failure {
       case 503:
         return ServerFailure(LocaleKeys.serviceUnavailable.tr());
       default:
-        return ServerFailure(
-          '${tr(LocaleKeys.unknown.tr())} (HTTP $statusCode)',
-        );
+        return ServerFailure('${tr(LocaleKeys.unknown.tr())} (HTTP $statusCode)');
     }
   }
 
@@ -105,7 +95,6 @@ class ServerFailure extends Failure {
 
   /// Detects network-level errors masquerading as DioExceptions.
   static bool _isNetworkError(DioException error) {
-    return error.error is SocketException ||
-        (error.message?.contains('SocketException') ?? false);
+    return error.error is SocketException || (error.message?.contains('SocketException') ?? false);
   }
 }

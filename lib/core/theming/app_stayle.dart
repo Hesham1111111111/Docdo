@@ -48,4 +48,28 @@ class AppStyle {
     fontSize: 16,
     fontWeight: FontWeightHelper.semiBold,
   );
+  static TextStyle style16Medium({Color? color}) {
+    return TextStyle(
+      fontSize: 16.sp,
+      color: color ?? AppColors.mainText,
+      fontWeight: FontWeightHelper.medium,
+    );
+  }
+  static TextStyle style14Regular({Color? color}) {
+    return TextStyle(
+      fontSize: 14.sp,
+      color: color ?? AppColors.mainText,
+      fontWeight: FontWeightHelper.regular,
+    );
+  }
+  static TextStyle style18Medium({Color? color}) {
+    return TextStyle(
+      fontSize: 18.sp,
+      color: color ?? AppColors.mainText,
+      fontWeight: FontWeightHelper.medium,
+    );
+  }
+
+
+
 }

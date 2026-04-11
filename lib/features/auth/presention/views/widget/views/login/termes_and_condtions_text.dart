@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../../core/routing/rouets.dart';
 
-
 class TermesAndConditionsText extends StatelessWidget {
   const TermesAndConditionsText({super.key});
 
