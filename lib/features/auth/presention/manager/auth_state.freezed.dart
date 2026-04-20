@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthState {
 
- int get currentCycle; RequestState<LoginResponse> get loginState;
+ int get currentCycle; bool get isPasswordVisible; bool get isConfirmPasswordVisible; RequestState<LoginResponse> get loginState; RequestState<SingUpResponse> get signUpState;
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $AuthStateCopyWith<AuthState> get copyWith => _$AuthStateCopyWithImpl<AuthState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthState&&(identical(other.currentCycle, currentCycle) || other.currentCycle == currentCycle)&&(identical(other.loginState, loginState) || other.loginState == loginState));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthState&&(identical(other.currentCycle, currentCycle) || other.currentCycle == currentCycle)&&(identical(other.isPasswordVisible, isPasswordVisible) || other.isPasswordVisible == isPasswordVisible)&&(identical(other.isConfirmPasswordVisible, isConfirmPasswordVisible) || other.isConfirmPasswordVisible == isConfirmPasswordVisible)&&(identical(other.loginState, loginState) || other.loginState == loginState)&&(identical(other.signUpState, signUpState) || other.signUpState == signUpState));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentCycle,loginState);
+int get hashCode => Object.hash(runtimeType,currentCycle,isPasswordVisible,isConfirmPasswordVisible,loginState,signUpState);
 
 @override
 String toString() {
-  return 'AuthState(currentCycle: $currentCycle, loginState: $loginState)';
+  return 'AuthState(currentCycle: $currentCycle, isPasswordVisible: $isPasswordVisible, isConfirmPasswordVisible: $isConfirmPasswordVisible, loginState: $loginState, signUpState: $signUpState)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $AuthStateCopyWith<$Res>  {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) _then) = _$AuthStateCopyWithImpl;
 @useResult
 $Res call({
- int currentCycle, RequestState<LoginResponse> loginState
+ int currentCycle, bool isPasswordVisible, bool isConfirmPasswordVisible, RequestState<LoginResponse> loginState, RequestState<SingUpResponse> signUpState
 });
 
 
-$RequestStateCopyWith<LoginResponse, $Res> get loginState;
+$RequestStateCopyWith<LoginResponse, $Res> get loginState;$RequestStateCopyWith<SingUpResponse, $Res> get signUpState;
 
 }
 /// @nodoc
@@ -62,11 +62,14 @@ class _$AuthStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? currentCycle = null,Object? loginState = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? currentCycle = null,Object? isPasswordVisible = null,Object? isConfirmPasswordVisible = null,Object? loginState = null,Object? signUpState = null,}) {
   return _then(_self.copyWith(
 currentCycle: null == currentCycle ? _self.currentCycle : currentCycle // ignore: cast_nullable_to_non_nullable
-as int,loginState: null == loginState ? _self.loginState : loginState // ignore: cast_nullable_to_non_nullable
-as RequestState<LoginResponse>,
+as int,isPasswordVisible: null == isPasswordVisible ? _self.isPasswordVisible : isPasswordVisible // ignore: cast_nullable_to_non_nullable
+as bool,isConfirmPasswordVisible: null == isConfirmPasswordVisible ? _self.isConfirmPasswordVisible : isConfirmPasswordVisible // ignore: cast_nullable_to_non_nullable
+as bool,loginState: null == loginState ? _self.loginState : loginState // ignore: cast_nullable_to_non_nullable
+as RequestState<LoginResponse>,signUpState: null == signUpState ? _self.signUpState : signUpState // ignore: cast_nullable_to_non_nullable
+as RequestState<SingUpResponse>,
   ));
 }
 /// Create a copy of AuthState
@@ -77,6 +80,15 @@ $RequestStateCopyWith<LoginResponse, $Res> get loginState {
   
   return $RequestStateCopyWith<LoginResponse, $Res>(_self.loginState, (value) {
     return _then(_self.copyWith(loginState: value));
+  });
+}/// Create a copy of AuthState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$RequestStateCopyWith<SingUpResponse, $Res> get signUpState {
+  
+  return $RequestStateCopyWith<SingUpResponse, $Res>(_self.signUpState, (value) {
+    return _then(_self.copyWith(signUpState: value));
   });
 }
 }
@@ -160,10 +172,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int currentCycle,  RequestState<LoginResponse> loginState)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int currentCycle,  bool isPasswordVisible,  bool isConfirmPasswordVisible,  RequestState<LoginResponse> loginState,  RequestState<SingUpResponse> signUpState)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AuthState() when $default != null:
-return $default(_that.currentCycle,_that.loginState);case _:
+return $default(_that.currentCycle,_that.isPasswordVisible,_that.isConfirmPasswordVisible,_that.loginState,_that.signUpState);case _:
   return orElse();
 
 }
@@ -181,10 +193,10 @@ return $default(_that.currentCycle,_that.loginState);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int currentCycle,  RequestState<LoginResponse> loginState)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int currentCycle,  bool isPasswordVisible,  bool isConfirmPasswordVisible,  RequestState<LoginResponse> loginState,  RequestState<SingUpResponse> signUpState)  $default,) {final _that = this;
 switch (_that) {
 case _AuthState():
-return $default(_that.currentCycle,_that.loginState);case _:
+return $default(_that.currentCycle,_that.isPasswordVisible,_that.isConfirmPasswordVisible,_that.loginState,_that.signUpState);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +213,10 @@ return $default(_that.currentCycle,_that.loginState);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int currentCycle,  RequestState<LoginResponse> loginState)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int currentCycle,  bool isPasswordVisible,  bool isConfirmPasswordVisible,  RequestState<LoginResponse> loginState,  RequestState<SingUpResponse> signUpState)?  $default,) {final _that = this;
 switch (_that) {
 case _AuthState() when $default != null:
-return $default(_that.currentCycle,_that.loginState);case _:
+return $default(_that.currentCycle,_that.isPasswordVisible,_that.isConfirmPasswordVisible,_that.loginState,_that.signUpState);case _:
   return null;
 
 }
@@ -216,11 +228,14 @@ return $default(_that.currentCycle,_that.loginState);case _:
 
 
 class _AuthState implements AuthState {
-  const _AuthState({this.currentCycle = 1, this.loginState = const InitialState()});
+  const _AuthState({this.currentCycle = 1, this.isPasswordVisible = false, this.isConfirmPasswordVisible = false, this.loginState = const InitialState(), this.signUpState = const InitialState()});
   
 
 @override@JsonKey() final  int currentCycle;
+@override@JsonKey() final  bool isPasswordVisible;
+@override@JsonKey() final  bool isConfirmPasswordVisible;
 @override@JsonKey() final  RequestState<LoginResponse> loginState;
+@override@JsonKey() final  RequestState<SingUpResponse> signUpState;
 
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
@@ -232,16 +247,16 @@ _$AuthStateCopyWith<_AuthState> get copyWith => __$AuthStateCopyWithImpl<_AuthSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthState&&(identical(other.currentCycle, currentCycle) || other.currentCycle == currentCycle)&&(identical(other.loginState, loginState) || other.loginState == loginState));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthState&&(identical(other.currentCycle, currentCycle) || other.currentCycle == currentCycle)&&(identical(other.isPasswordVisible, isPasswordVisible) || other.isPasswordVisible == isPasswordVisible)&&(identical(other.isConfirmPasswordVisible, isConfirmPasswordVisible) || other.isConfirmPasswordVisible == isConfirmPasswordVisible)&&(identical(other.loginState, loginState) || other.loginState == loginState)&&(identical(other.signUpState, signUpState) || other.signUpState == signUpState));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentCycle,loginState);
+int get hashCode => Object.hash(runtimeType,currentCycle,isPasswordVisible,isConfirmPasswordVisible,loginState,signUpState);
 
 @override
 String toString() {
-  return 'AuthState(currentCycle: $currentCycle, loginState: $loginState)';
+  return 'AuthState(currentCycle: $currentCycle, isPasswordVisible: $isPasswordVisible, isConfirmPasswordVisible: $isConfirmPasswordVisible, loginState: $loginState, signUpState: $signUpState)';
 }
 
 
@@ -252,11 +267,11 @@ abstract mixin class _$AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Re
   factory _$AuthStateCopyWith(_AuthState value, $Res Function(_AuthState) _then) = __$AuthStateCopyWithImpl;
 @override @useResult
 $Res call({
- int currentCycle, RequestState<LoginResponse> loginState
+ int currentCycle, bool isPasswordVisible, bool isConfirmPasswordVisible, RequestState<LoginResponse> loginState, RequestState<SingUpResponse> signUpState
 });
 
 
-@override $RequestStateCopyWith<LoginResponse, $Res> get loginState;
+@override $RequestStateCopyWith<LoginResponse, $Res> get loginState;@override $RequestStateCopyWith<SingUpResponse, $Res> get signUpState;
 
 }
 /// @nodoc
@@ -269,11 +284,14 @@ class __$AuthStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? currentCycle = null,Object? loginState = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? currentCycle = null,Object? isPasswordVisible = null,Object? isConfirmPasswordVisible = null,Object? loginState = null,Object? signUpState = null,}) {
   return _then(_AuthState(
 currentCycle: null == currentCycle ? _self.currentCycle : currentCycle // ignore: cast_nullable_to_non_nullable
-as int,loginState: null == loginState ? _self.loginState : loginState // ignore: cast_nullable_to_non_nullable
-as RequestState<LoginResponse>,
+as int,isPasswordVisible: null == isPasswordVisible ? _self.isPasswordVisible : isPasswordVisible // ignore: cast_nullable_to_non_nullable
+as bool,isConfirmPasswordVisible: null == isConfirmPasswordVisible ? _self.isConfirmPasswordVisible : isConfirmPasswordVisible // ignore: cast_nullable_to_non_nullable
+as bool,loginState: null == loginState ? _self.loginState : loginState // ignore: cast_nullable_to_non_nullable
+as RequestState<LoginResponse>,signUpState: null == signUpState ? _self.signUpState : signUpState // ignore: cast_nullable_to_non_nullable
+as RequestState<SingUpResponse>,
   ));
 }
 
@@ -285,6 +303,15 @@ $RequestStateCopyWith<LoginResponse, $Res> get loginState {
   
   return $RequestStateCopyWith<LoginResponse, $Res>(_self.loginState, (value) {
     return _then(_self.copyWith(loginState: value));
+  });
+}/// Create a copy of AuthState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$RequestStateCopyWith<SingUpResponse, $Res> get signUpState {
+  
+  return $RequestStateCopyWith<SingUpResponse, $Res>(_self.signUpState, (value) {
+    return _then(_self.copyWith(signUpState: value));
   });
 }
 }

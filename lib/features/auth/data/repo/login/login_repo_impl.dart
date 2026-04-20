@@ -1,8 +1,8 @@
 import 'package:advanced/core/networking/api_endpoints.dart';
 import 'package:advanced/core/networking/api_result.dart';
-import 'package:advanced/features/auth/data/model/login_request_body.dart';
-import 'package:advanced/features/auth/data/model/login_response.dart';
-import '../../../../core/networking/api_client.dart';
+import 'package:advanced/features/auth/data/model/login/login_request_body.dart';
+import 'package:advanced/features/auth/data/model/login/login_response.dart';
+import '../../../../../core/networking/api_client.dart';
 import 'login_repo.dart';
 
 class LoginRepoImpl implements LoginRepo {

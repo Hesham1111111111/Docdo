@@ -1,11 +1,11 @@
-import 'package:advanced/features/auth/data/model/login_request_body.dart';
-import 'package:advanced/features/auth/data/repo/login_repo.dart';
+import 'package:advanced/features/auth/data/model/login/login_request_body.dart';
+import 'package:advanced/features/auth/data/repo/login/login_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/helpers/request_state/request_state.dart';
-import '../../../../core/networking/api_result.dart';
-import 'auth_state.dart';
+import '../../../../../core/helpers/request_state/request_state.dart';
+import '../../../../../core/networking/api_result.dart';
+import '../auth_state.dart';
 
 class LoginCubit extends Cubit<AuthState> {
   LoginCubit(this.loginRepo) : super(const AuthState());
@@ -17,10 +17,15 @@ class LoginCubit extends Cubit<AuthState> {
 
   final formKey = GlobalKey<FormState>();
 
-  Future<void> login(LoginRequestBody loginRequest) async {
+  Future<void> login() async {
     emit(state.copyWith(loginState: const LoadingState()));
 
-    final result = await loginRepo.login(loginRequest);
+    final result = await loginRepo.login(
+      LoginRequestBody(
+        email: emailController.text,
+        password: passwordController.text,
+      ),
+    );
 
     result.when(
       success: (data) {
@@ -31,7 +36,13 @@ class LoginCubit extends Cubit<AuthState> {
       },
     );
   }
-
+  void togglePasswordVisibility() {
+    emit(
+      state.copyWith(
+        isPasswordVisible: !state.isPasswordVisible,
+      ),
+    );
+  }
   @override
   Future<void> close() {
     emailController.dispose();

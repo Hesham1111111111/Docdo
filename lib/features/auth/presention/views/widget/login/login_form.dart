@@ -1,4 +1,5 @@
 import 'package:advanced/core/helpers/validation/app_validator.dart';
+import 'package:advanced/features/auth/presention/manager/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,8 +7,7 @@ import '../../../../../../../core/helpers/spacing.dart';
 import '../../../../../../../core/theming/app_stayle.dart';
 import '../../../../../../../core/widgets/app_text_form_field.dart';
 import '../../../../../../../core/widgets/custom_bottom.dart';
-import '../../../../../data/model/login_request_body.dart';
-import '../../../../manager/login_cubit.dart';
+import '../../../manager/login/login_cubit.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -17,9 +17,6 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  bool isPasswordVisible = false;
-  bool isLoading = false;
-
   late final LoginCubit cubit;
 
   @override
@@ -46,24 +43,30 @@ class _LoginFormState extends State<LoginForm> {
 
           vSpace(20),
 
-          CustomTextFormField(
-            title: "Password",
-            keyboardType: TextInputType.visiblePassword,
-            controller: cubit.passwordController,
-            hintText: " Enter your Password",
-            obscureText: !isPasswordVisible,
-            suffixIcon: InkWell(
-              onTap: () {
-                setState(() {
-                  isPasswordVisible = !isPasswordVisible;
-                });
-              },
-              child: Icon(
-                isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-              ),
-            ),
-            validator: (value) =>
-                AppValidator.validateEmptyField(context, value),
+          BlocBuilder<LoginCubit, AuthState>(
+            buildWhen: (prev, curr) =>
+                prev.isPasswordVisible != curr.isPasswordVisible,
+            builder: (context, state) {
+              return CustomTextFormField(
+                title: "Password",
+                keyboardType: TextInputType.visiblePassword,
+                controller: cubit.passwordController,
+                hintText: "Enter your Password",
+                obscureText: !state.isPasswordVisible,
+                suffixIcon: InkWell(
+                  onTap: () {
+                    context.read<LoginCubit>().togglePasswordVisibility();
+                  },
+                  child: Icon(
+                    state.isPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                  ),
+                ),
+                validator: (value) =>
+                    AppValidator.validateEmptyField(context, value),
+              );
+            },
           ),
 
           vSpace(9),
@@ -82,16 +85,12 @@ class _LoginFormState extends State<LoginForm> {
           ),
 
           vSpace(24),
+
           CustomButton(
             text: "Login",
             onPressed: () {
               if (cubit.formKey.currentState!.validate()) {
-                cubit.login(
-                  LoginRequestBody(
-                    email: cubit.emailController.text,
-                    password: cubit.passwordController.text,
-                  ),
-                );
+                cubit.login();
               }
             },
           ),

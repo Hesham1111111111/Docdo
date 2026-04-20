@@ -1,6 +1,6 @@
 import 'package:advanced/core/routing/rouets.dart';
 import 'package:advanced/features/auth/presention/manager/auth_state.dart';
-import 'package:advanced/features/auth/presention/manager/login_cubit.dart';
+import 'package:advanced/features/auth/presention/manager/login/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

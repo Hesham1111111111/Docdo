@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import '../../../../../../../core/routing/rouets.dart';
 
 class TermesAndConditionsText extends StatelessWidget {
-  const TermesAndConditionsText({super.key});
+  const TermesAndConditionsText({super.key, required this.text, required this.onTap});
+
+  final String text;
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +44,8 @@ class TermesAndConditionsText extends StatelessWidget {
               style: AppStyle.text14GryRegular,
             ),
             InkWell(
-              onTap: () {
-                context.pushNamed(Routes.signUpScreen);
-              },
-              child: Text("Sign Up ", style: AppStyle.text14PrimaryBold),
+              onTap: onTap,
+              child: Text(text, style: AppStyle.text14PrimaryBold),
             ),
           ],
         ),
