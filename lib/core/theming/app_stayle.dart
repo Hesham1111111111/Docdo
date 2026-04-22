@@ -8,6 +8,14 @@ class AppStyle {
     fontSize: 24.sp,
     color: AppColors.black,
     fontWeight: FontWeight.bold,
+  );  static TextStyle text18DarkBlueBold = TextStyle(
+    fontSize: 18.sp,
+    color: AppColors.darkBlue,
+    fontWeight: FontWeight.bold,
+  );static TextStyle text18WhiteMedium = TextStyle(
+    fontSize: 18.sp,
+    color: AppColors.white,
+    fontWeight: FontWeight.bold,
   );
   static TextStyle text32BlueBold = TextStyle(
     fontSize: 32.sp,
@@ -24,6 +32,10 @@ class AppStyle {
     fontWeight: FontWeightHelper.regular,
   );static TextStyle text12PrimaryRegular = TextStyle(
     fontSize: 12.sp,
+    color: AppColors.primary,
+    fontWeight: FontWeightHelper.regular,
+  );static TextStyle text15PrimaryRegular = TextStyle(
+    fontSize: 15.sp,
     color: AppColors.primary,
     fontWeight: FontWeightHelper.regular,
   );static TextStyle text14GryRegular = TextStyle(

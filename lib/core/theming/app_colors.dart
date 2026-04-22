@@ -7,6 +7,7 @@ class AppColors {
   static const Color gry = Color(0xFF757575);
   static const Color black = Color(0xFF242424);
   static const Color lightGray = Color(0xFFE0E0E0);
+  static const Color white = Color(0xFFFFFFFF);
   static const Color lighterGray = Color(0xFFF5F5F5);
   static const Color darkBlue = Color(0xFF242424);
   static const Color moreLightGray = Color(0xFFF0F0F0);
@@ -22,6 +23,8 @@ class AppColors {
   static const Color border = Color(0xffDBD5D5);
   static const Color card = Color(0xffF1F1F1);
   static const Color icon2 = Color(0xff7C7C7C);
+  static const Color moreLiterGray = Color(0xffF8F8F8);
+
   static const Gradient appGradient = LinearGradient(
     colors: [
       AppColors.primary2,
