@@ -1,5 +1,10 @@
+import 'package:advanced/core/helpers/spacing.dart';
 import 'package:advanced/features/home/presention/views/widget/doctor_blue_container.dart';
+import 'package:advanced/features/home/presention/views/widget/doctor_speciality_list_view.dart';
+import 'package:advanced/features/home/presention/views/widget/doctor_speciality_seeAll.dart';
 import 'package:advanced/features/home/presention/views/widget/home_top_bar.dart';
+import 'package:advanced/features/home/presention/views/widget/recommendation_doctor.dart';
+import 'package:advanced/features/home/presention/views/widget/recommendationdoctor_listView.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
@@ -16,6 +21,20 @@ class HomeView extends StatelessWidget {
               children: [
                 const HomeTopBar(),
                 const DoctorBlueContainer (),
+                vSpace(24),
+                const DoctorSpecialitySeeAll (),
+                const DoctorSpecialityListView (),
+                vSpace(23),
+                const RecommendationDoctor(),
+                vSpace(12),
+                const RecommendationDoctorListView(),
+
+
+
+
+
+
+
 
 
               ]),

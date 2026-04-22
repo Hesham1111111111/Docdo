@@ -5,6 +5,7 @@ class AppImages {
   static const String splash = "assets/images/splash_screen.png";
   static const String background = "assets/images/Background.png";
   static const String nurse = "assets/images/Image.png";
+  static const String test = "assets/images/Man Doctor Europe 1.png";
 }
 
 class AppSvg {
