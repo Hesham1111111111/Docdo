@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/helpers/request_state/request_state.dart';
 import '../../../../../core/networking/api_result.dart';
+import '../../../../../core/networking/dio_factory.dart';
 import '../auth_state.dart';
 
 class LoginCubit extends Cubit<AuthState> {
@@ -27,22 +28,24 @@ class LoginCubit extends Cubit<AuthState> {
       ),
     );
 
-    result.when(
-      success: (data) {
+    await result.when(
+      success: (data) async {
+        final token = data.data.token;
+
+        await DioFactory.updateAuthToken(token);
+
         emit(state.copyWith(loginState: SuccessState(data)));
       },
-      failure: (error) {
+      failure: (error) async {
         emit(state.copyWith(loginState: ErrorState(error)));
       },
     );
   }
+
   void togglePasswordVisibility() {
-    emit(
-      state.copyWith(
-        isPasswordVisible: !state.isPasswordVisible,
-      ),
-    );
+    emit(state.copyWith(isPasswordVisible: !state.isPasswordVisible));
   }
+
   @override
   Future<void> close() {
     emailController.dispose();

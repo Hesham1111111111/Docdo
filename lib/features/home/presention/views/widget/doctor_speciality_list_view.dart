@@ -1,32 +1,23 @@
+import 'package:advanced/features/home/data/model/doctor_speciality_model.dart';
+import 'package:advanced/features/home/presention/views/widget/doctor_speciality_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-
-import '../../../../../core/resources/assets.dart';
-import '../../../../../core/theming/app_colors.dart';
-
 class DoctorSpecialityListView extends StatelessWidget {
-  const DoctorSpecialityListView({super.key});
+  const DoctorSpecialityListView({super.key, required this.specialities});
+
+  final List<Specialization> specialities;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100.h,
+      height: 110,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) => Column(
-          children: [
-            CircleAvatar(
-              radius: 32.sp,
-              backgroundColor: AppColors.moreLiterGray,
-              child: Image.asset(AppImages.test),
-            ),
-            SizedBox(height: 8.h),
-            Text("Dentist", style: TextStyle(fontSize: 14.sp)),
-          ],
-        ),
-        separatorBuilder: (context, index) => SizedBox(width: 16.w),
-        itemCount: 10,
+        itemCount: specialities.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 12),
+
+        itemBuilder: (context, index) {
+          return DoctorSpecialityItem(speciality: specialities[index]);
+        },
       ),
     );
   }
