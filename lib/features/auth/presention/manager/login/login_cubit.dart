@@ -19,29 +19,35 @@ class LoginCubit extends Cubit<AuthState> {
   final formKey = GlobalKey<FormState>();
 
   Future<void> login() async {
+    if (!formKey.currentState!.validate()) return;
+
+    if (state.loginState is LoadingState) return;
+
     emit(state.copyWith(loginState: const LoadingState()));
 
     final result = await loginRepo.login(
       LoginRequestBody(
-        email: emailController.text,
-        password: passwordController.text,
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
       ),
     );
 
-    await result.when(
+    result.when(
       success: (data) async {
         final token = data.data.token;
 
-        await DioFactory.updateAuthToken(token);
+        await DioFactory.updateToken(token);
 
         emit(state.copyWith(loginState: SuccessState(data)));
       },
-      failure: (error) async {
-        emit(state.copyWith(loginState: ErrorState(error)));
-      },
-    );
+      failure: (error) {
+        emit(
+          state.copyWith(
+            loginState: ErrorState(error.message),
+          ),
+        );
+      },    );
   }
-
   void togglePasswordVisibility() {
     emit(state.copyWith(isPasswordVisible: !state.isPasswordVisible));
   }

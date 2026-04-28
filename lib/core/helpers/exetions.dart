@@ -12,4 +12,8 @@ extension Navigation on BuildContext {
     return Navigator.of(this).pushNamedAndRemoveUntil(routeName ,predicate, arguments: argument);
   }
   void pop ()=>Navigator.of(this).pop();
+
+}
+extension ListExtension<T> on List<T>? {
+  bool get isEmptyOrNull => this == null || this!.isEmpty;
 }

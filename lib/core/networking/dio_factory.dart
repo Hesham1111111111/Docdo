@@ -9,35 +9,37 @@ import 'api_endpoints.dart';
 
 /// A singleton factory class for configuring and managing a Dio instance.
 class DioFactory {
-  // Private constructor to prevent direct instantiation
   DioFactory._();
 
-  // Default timeout duration for API requests
-  static const _defaultTimeout = Duration(seconds: 160);
+  static const _timeout = Duration(seconds: 60);
 
-  // Private static Dio instance
-  static Dio? _dioInstance;
-  static InterceptorsWrapper? _authInterceptor;
+  static Dio? _dio;
+  static String? _token;
+  static String? _lang;
 
-  /// Getter to retrieve the Dio instance
-  /// Throws an exception if initialize() is not called before accessing it
   static Dio get dio {
-    if (_dioInstance == null) {
-      throw Exception('Dio instance not initialized. Call initialize() first.');
+    if (_dio == null) {
+      throw Exception('Call initialize() first');
     }
-    return _dioInstance!;
+    return _dio!;
   }
 
-  /// Initializes the Dio instance if it's not already created
   static Future<void> initialize() async {
-    if (_dioInstance != null) return;
+    if (_dio != null) return;
 
-    _dioInstance = Dio(
+    _token = await SharedPrefHelper.getSecuredString(
+      key: SharedPrefKeys.token,
+    );
+
+    _lang = await SharedPrefHelper.getSecuredString(
+      key: SharedPrefKeys.langCode,
+    );
+
+    _dio = Dio(
       BaseOptions(
-        baseUrl: ApiEndpoints.baseUrl, // Base API URL
-        connectTimeout: _defaultTimeout,
-        receiveTimeout: _defaultTimeout,
-        sendTimeout: _defaultTimeout,
+        baseUrl: ApiEndpoints.baseUrl,
+        connectTimeout: _timeout,
+        receiveTimeout: _timeout,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -45,39 +47,11 @@ class DioFactory {
       ),
     );
 
-    _addAuthInterceptor(); // Add authentication token interceptor
-    _addLoggingInterceptor(); // Add logging interceptor (only in debug mode)
-  }
+    _dio!.interceptors.add(_authInterceptor());
 
-  /// Adds an interceptor to attach the authentication token to each request
-  static void _addAuthInterceptor() {
-    // Remove only previously stored auth interceptor (don't remove other wrappers).
-    if (_authInterceptor != null) {
-      _dioInstance?.interceptors.remove(_authInterceptor);
-    }
-
-    _authInterceptor = InterceptorsWrapper(
-      onRequest: (options, handler) async {
-        final token = SharedPrefHelper.getString(key: SharedPrefKeys.token);
-        final langCode = SharedPrefHelper.getString(key: SharedPrefKeys.langCode);
-
-        if (token.isNotEmpty) options.headers['Authorization'] = 'Bearer $token';
-        if (langCode.isNotEmpty) options.headers['lang'] = langCode;
-
-        return handler.next(options);
-      },
-    );
-
-    // Ensure auth interceptor runs before others (so logger sees the headers).
-    _dioInstance?.interceptors.insert(0, _authInterceptor!);
-  }
-
-  /// Adds a logging interceptor for debugging API requests and responses
-  static void _addLoggingInterceptor() {
     if (kDebugMode) {
-      _dioInstance?.interceptors.add(
+      _dio!.interceptors.add(
         PrettyDioLogger(
-          requestHeader: true,
           requestBody: true,
           responseBody: true,
         ),
@@ -85,25 +59,50 @@ class DioFactory {
     }
   }
 
-  static Future<void> updateAuthToken(String newToken) async {
-    await SharedPrefHelper.setData(key: SharedPrefKeys.token, value: newToken);
-    _addAuthInterceptor(); // safely refresh interceptor
-  }
+  static InterceptorsWrapper _authInterceptor() {
+    return InterceptorsWrapper(
+      onRequest: (options, handler) {
+        if (_token?.isNotEmpty ?? false) {
+          options.headers['Authorization'] = 'Bearer $_token';
+        }
 
-  static Future<void> updateLang(String newLangCode) async {
-    await SharedPrefHelper.setData(key: SharedPrefKeys.langCode, value: newLangCode);
-    _addAuthInterceptor(); // safely refresh interceptor
-  }
+        if (_lang?.isNotEmpty ?? false) {
+          options.headers['Accept-Language'] = _lang;
+        }
 
-  /// Clears the stored authentication token and removes it from requests
-  static Future<void> clearAuthToken() async {
-    await SharedPrefHelper.removeData(key: SharedPrefKeys.token);
+        handler.next(options);
+      },
 
-    // Remove authentication interceptors
-    _dioInstance?.interceptors.removeWhere(
-          (interceptor) => interceptor is InterceptorsWrapper,
+      onError: (error, handler) async {
+        // مثال بسيط لو عايز تعمل refresh token
+        if (error.response?.statusCode == 401) {
+          // ممكن تضيف logic هنا
+        }
+        handler.next(error);
+      },
     );
+  }
 
-    _addAuthInterceptor();
+  static Future<void> updateToken(String token) async {
+    _token = token;
+    await SharedPrefHelper.setSecuredString(
+      key: SharedPrefKeys.token,
+      value: token,
+    );
+  }
+
+  static Future<void> updateLang(String lang) async {
+    _lang = lang;
+    await SharedPrefHelper.setSecuredString(
+      key: SharedPrefKeys.langCode,
+      value: lang,
+    );
+  }
+
+  static Future<void> clearAuth() async {
+    _token = null;
+    await SharedPrefHelper.removeSecureData(
+      key: SharedPrefKeys.token,
+    );
   }
 }

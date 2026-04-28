@@ -1,5 +1,5 @@
 import 'package:advanced/features/home/data/model/doctor_speciality_model.dart';
-import 'package:advanced/features/home/presention/views/widget/recommendations_doctor_item.dart';
+import 'package:advanced/features/home/presention/views/widget/recommendation_doctor/recommendations_doctor_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

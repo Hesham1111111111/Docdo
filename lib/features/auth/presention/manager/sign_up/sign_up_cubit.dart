@@ -34,9 +34,12 @@ class SignUpCubit extends Cubit<AuthState> {
         emit(state.copyWith(signUpState: SuccessState(data)));
       },
       failure: (error) {
-        emit(state.copyWith(signUpState: ErrorState(error)));
-      },
-    );
+        emit(
+          state.copyWith(
+            signUpState: ErrorState(error.message),
+          ),
+        );
+      },    );
 
   }
   void togglePasswordVisibility() {

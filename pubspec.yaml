@@ -36,6 +36,7 @@ dependencies:
   retrofit: ^4.9.2
   flutter_native_splash:
   dartz: ^0.10.1
+  shimmer: ^3.0.0
 
 
 
@@ -49,6 +50,7 @@ dependencies:
   flutter_animate: ^4.5.2
   flutter_bloc: ^9.1.1
   get_it: ^9.2.1
+  flutter_secure_storage: ^10.0.0
   
 
 dev_dependencies:

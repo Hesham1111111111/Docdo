@@ -122,7 +122,7 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( T data)?  success,TResult Function( String error)?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( T data)?  success,TResult Function( Failure error)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Success() when success != null:
 return success(_that.data);case _Failure() when failure != null:
@@ -144,7 +144,7 @@ return failure(_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( T data)  success,required TResult Function( String error)  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( T data)  success,required TResult Function( Failure error)  failure,}) {final _that = this;
 switch (_that) {
 case _Success():
 return success(_that.data);case _Failure():
@@ -165,7 +165,7 @@ return failure(_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( T data)?  success,TResult? Function( String error)?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( T data)?  success,TResult? Function( Failure error)?  failure,}) {final _that = this;
 switch (_that) {
 case _Success() when success != null:
 return success(_that.data);case _Failure() when failure != null:
@@ -250,7 +250,7 @@ class _Failure<T> implements ApiResult<T> {
   const _Failure(this.error);
   
 
- final  String error;
+ final  Failure error;
 
 /// Create a copy of ApiResult
 /// with the given fields replaced by the non-null parameter values.
@@ -282,7 +282,7 @@ abstract mixin class _$FailureCopyWith<T,$Res> implements $ApiResultCopyWith<T, 
   factory _$FailureCopyWith(_Failure<T> value, $Res Function(_Failure<T>) _then) = __$FailureCopyWithImpl;
 @useResult
 $Res call({
- String error
+ Failure error
 });
 
 
@@ -302,7 +302,7 @@ class __$FailureCopyWithImpl<T,$Res>
 @pragma('vm:prefer-inline') $Res call({Object? error = null,}) {
   return _then(_Failure<T>(
 null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String,
+as Failure,
   ));
 }
 

@@ -1,10 +1,7 @@
 import 'package:advanced/core/networking/api_result.dart';
+import 'package:advanced/core/networking/api_failure.dart';
+import 'package:advanced/core/networking/api_services.dart';
 import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
-
-import '../helpers/locale_keys.dart';
-import 'api_failure.dart';
-import 'api_services.dart';
 
 enum ApiMethods { GET, POST, PUT, DELETE, PATCH }
 
@@ -62,31 +59,35 @@ class ApiClient {
           break;
       }
 
-      // 🛑 Empty response check
+      // 🛑 Null response check
       if (responseData == null) {
-        return ApiResult.failure("Empty response from server");
+        return ApiResult.failure(
+          ServerFailure("Empty response from server"),
+        );
       }
 
-      // 🛑 Safe parsing layer
+      // 🧠 Safe parsing layer
       try {
         final parsed = response(responseData);
         return ApiResult.success(parsed);
-      } catch (_) {
-        return ApiResult.failure("Data parsing failed");
+      } catch (e) {
+        return ApiResult.failure(
+          ServerFailure("Data parsing failed"),
+        );
       }
     }
 
-    // 🔥 Main error handling (your ServerFailure)
+    // 🔥 Dio error handling
     on DioException catch (e) {
       return ApiResult.failure(
-        ServerFailure.fromDioException(e).message,
+        ServerFailure.fromDioException(e),
       );
     }
 
-    // 🔥 fallback unexpected errors
+    // 🔥 Unexpected errors fallback
     catch (_) {
       return ApiResult.failure(
-        ServerFailure(LocaleKeys.unknown.tr()).message,
+        ServerFailure("Unexpected error occurred"),
       );
     }
   }

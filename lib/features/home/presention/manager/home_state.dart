@@ -11,5 +11,8 @@ abstract class HomeState with _$HomeState {
     @Default(InitialState())
     RequestState<SpecializationResponse> doctorSpecialityState,
 
+    @Default(InitialState())
+    RequestState<List<Doctor>> doctors,
+    int? selectedSpecializationId,
   }) = _HomeState;
 }

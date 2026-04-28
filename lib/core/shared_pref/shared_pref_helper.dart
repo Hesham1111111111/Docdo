@@ -1,75 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'shared_pref_keys.dart';
 
 class SharedPrefHelper {
-  // Private constructor to prevent instantiation
   SharedPrefHelper._();
 
-  static late SharedPreferences _sharedPreferences;
+  static late SharedPreferences _prefs;
+  static const _secureStorage = FlutterSecureStorage();
 
-  /// Initializes the SharedPreferences instance.
-  /// Must be called before using any other methods.
   static Future<void> init() async {
-    _sharedPreferences = await SharedPreferences.getInstance();
+    _prefs = await SharedPreferences.getInstance();
   }
 
-  /// Removes a value associated with the given [key].
-  static Future<void> removeData({required String key}) async {
-    debugPrint('SharedPrefHelper: Removing data with key: $key');
-    await _sharedPreferences.remove(key);
-  }
+  /// ---------- Normal Storage ----------
 
-  /// Clears all data in SharedPreferences.
-  static Future<void> clearAllData() async {
-    debugPrint('SharedPrefHelper: Clearing all data');
-    await _sharedPreferences.clear();
-  }
-
-  /// Saves a [value] with the given [key] in SharedPreferences.
-  /// Supports [String], [int], [bool], and [double] values.
-  static Future<void> setData({required String key, required dynamic value}) async {
-    debugPrint('SharedPrefHelper: Setting data with key: $key and value: $value');
-
+  static Future<void> setData({
+    required String key,
+    required dynamic value,
+  }) async {
     if (value is String) {
-      await _sharedPreferences.setString(key, value);
+      await _prefs.setString(key, value);
     } else if (value is int) {
-      await _sharedPreferences.setInt(key, value);
+      await _prefs.setInt(key, value);
     } else if (value is bool) {
-      await _sharedPreferences.setBool(key, value);
+      await _prefs.setBool(key, value);
     } else if (value is double) {
-      await _sharedPreferences.setDouble(key, value);
+      await _prefs.setDouble(key, value);
     } else {
-      throw ArgumentError('Unsupported value type: ${value.runtimeType}');
+      throw Exception('Unsupported type');
     }
   }
 
-  /// Retrieves a bool value associated with the given [key].
-  /// Returns `false` if the key does not exist.
-  static bool getBool({required String key}) {
-    debugPrint('SharedPrefHelper: Retrieving bool with key: $key');
-    return _sharedPreferences.getBool(key) ?? false;
+  static T? getData<T>(String key) {
+    return _prefs.get(key) as T?;
   }
 
-  /// Retrieves a double value associated with the given [key].
-  /// Returns `0.0` if the key does not exist.
-  static double getDouble({required String key}) {
-    debugPrint('SharedPrefHelper: Retrieving double with key: $key');
-    return _sharedPreferences.getDouble(key) ?? 0.0;
+  static Future<void> removeData(String key) async {
+    await _prefs.remove(key);
   }
 
-  /// Retrieves an int value associated with the given [key].
-  /// Returns `0` if the key does not exist.
-  static int getInt({required String key}) {
-    debugPrint('SharedPrefHelper: Retrieving int with key: $key');
-    return _sharedPreferences.getInt(key) ?? 0;
+  static Future<void> clearAll() async {
+    await _prefs.clear();
   }
 
-  /// Retrieves a String value associated with the given [key].
-  /// Returns an empty string if the key does not exist.
-  static String getString({required String key}) {
-    debugPrint('SharedPrefHelper: Retrieving string with key: $key');
-    return _sharedPreferences.getString(key) ?? '';
+  /// ---------- Secure Storage ----------
+
+  static Future<void> setSecuredString({
+    required String key,
+    required String value,
+  }) async {
+    await _secureStorage.write(key: key, value: value);
+  }
+
+  static Future<String?> getSecuredString({
+    required String key,
+  }) async {
+    return await _secureStorage.read(key: key);
+  }
+
+  static Future<void> removeSecureData({
+    required String key,
+  }) async {
+    await _secureStorage.delete(key: key);
+  }
+
+  static Future<void> clearSecure() async {
+    await _secureStorage.deleteAll();
   }
 }

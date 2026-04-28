@@ -1,25 +1,23 @@
 import 'package:advanced/core/di/service_locator.dart';
 import 'package:advanced/core/helpers/spacing.dart';
 import 'package:advanced/features/home/presention/manager/home_cubit.dart';
-import 'package:advanced/features/home/presention/manager/home_state.dart';
 import 'package:advanced/features/home/presention/views/widget/doctor_blue_container.dart';
-import 'package:advanced/features/home/presention/views/widget/doctor_speciality_list_view.dart';
-import 'package:advanced/features/home/presention/views/widget/doctor_speciality_seeAll.dart';
+import 'package:advanced/features/home/presention/views/widget/doctor_speciality/doctor_speciality_seeAll.dart';
+import 'package:advanced/features/home/presention/views/widget/doctor_speciality/doctor_specialty_bolc_.dart';
 import 'package:advanced/features/home/presention/views/widget/home_top_bar.dart';
-import 'package:advanced/features/home/presention/views/widget/recommendation_doctor.dart';
-import 'package:advanced/features/home/presention/views/widget/recommendationdoctor_listView.dart';
+import 'package:advanced/features/home/presention/views/widget/recommendation_doctor/recommendation_doctor.dart';
+import 'package:advanced/features/home/presention/views/widget/recommendation_doctor/recommendation_doctor_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/helpers/request_state/request_state.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+    const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<HomeCubit>()..doctorSpeciality(),
+      create: (context) => getIt<HomeCubit>()..getDoctorSpecialities(),
 
       child: Scaffold(
         body: SafeArea(
@@ -32,42 +30,12 @@ class HomeView extends StatelessWidget {
                 const DoctorBlueContainer(),
                 vSpace(24),
                 const DoctorSpecialitySeeAll(),
-                BlocBuilder<HomeCubit, HomeState>(
-                  buildWhen: (prev, curr) =>
-                      prev.doctorSpecialityState != curr.doctorSpecialityState,
-                  builder: (context, state) {
-                    return state.doctorSpecialityState.maybeWhen(
-                      orElse: () => const SizedBox(),
-                      loading: () => const CircularProgressIndicator(),
-                      success: (specialities) => DoctorSpecialityListView(
-                        specialities: specialities.data,
-                      ),
-                      error: (error) => Text(error),
-                    );
-                  },
-                ),
                 vSpace(23),
+                DoctorSpecialtyBloc(),
                 const RecommendationDoctor(),
                 vSpace(12),
-                BlocBuilder<HomeCubit, HomeState>(
-                  buildWhen: (prev, curr) =>
-                      prev.doctorSpecialityState != curr.doctorSpecialityState,
-                  builder: (context, state) {
-                    return state.doctorSpecialityState.maybeWhen(
-                      orElse: () => const SizedBox(),
-                      loading: () => const CircularProgressIndicator(),
-                      success: (specialities) {
-                        return RecommendationDoctorListView(
-                          doctor: specialities.data
-                              .expand((speciality) => speciality.doctors)
-                              .toList(),
-                        );
-                      },
-
-                      error: (error) => Text(error),
-                    );
-                  },
-                ),
+                RecommendationDoctorBloc(),
+                SizedBox(height: 20.h),
               ],
             ),
           ),

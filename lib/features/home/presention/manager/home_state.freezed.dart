@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeState {
 
- RequestState<SpecializationResponse> get doctorSpecialityState; RequestState<Doctor> get recommendationDoctorState;
+ RequestState<SpecializationResponse> get doctorSpecialityState; RequestState<List<Doctor>> get doctors; int? get selectedSpecializationId;
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $HomeStateCopyWith<HomeState> get copyWith => _$HomeStateCopyWithImpl<HomeState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.doctorSpecialityState, doctorSpecialityState) || other.doctorSpecialityState == doctorSpecialityState)&&(identical(other.recommendationDoctorState, recommendationDoctorState) || other.recommendationDoctorState == recommendationDoctorState));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.doctorSpecialityState, doctorSpecialityState) || other.doctorSpecialityState == doctorSpecialityState)&&(identical(other.doctors, doctors) || other.doctors == doctors)&&(identical(other.selectedSpecializationId, selectedSpecializationId) || other.selectedSpecializationId == selectedSpecializationId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,doctorSpecialityState,recommendationDoctorState);
+int get hashCode => Object.hash(runtimeType,doctorSpecialityState,doctors,selectedSpecializationId);
 
 @override
 String toString() {
-  return 'HomeState(doctorSpecialityState: $doctorSpecialityState, recommendationDoctorState: $recommendationDoctorState)';
+  return 'HomeState(doctorSpecialityState: $doctorSpecialityState, doctors: $doctors, selectedSpecializationId: $selectedSpecializationId)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $HomeStateCopyWith<$Res>  {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) = _$HomeStateCopyWithImpl;
 @useResult
 $Res call({
- RequestState<SpecializationResponse> doctorSpecialityState, RequestState<Doctor> recommendationDoctorState
+ RequestState<SpecializationResponse> doctorSpecialityState, RequestState<List<Doctor>> doctors, int? selectedSpecializationId
 });
 
 
-$RequestStateCopyWith<SpecializationResponse, $Res> get doctorSpecialityState;$RequestStateCopyWith<Doctor, $Res> get recommendationDoctorState;
+$RequestStateCopyWith<SpecializationResponse, $Res> get doctorSpecialityState;$RequestStateCopyWith<List<Doctor>, $Res> get doctors;
 
 }
 /// @nodoc
@@ -62,11 +62,12 @@ class _$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? doctorSpecialityState = null,Object? recommendationDoctorState = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? doctorSpecialityState = null,Object? doctors = null,Object? selectedSpecializationId = freezed,}) {
   return _then(_self.copyWith(
 doctorSpecialityState: null == doctorSpecialityState ? _self.doctorSpecialityState : doctorSpecialityState // ignore: cast_nullable_to_non_nullable
-as RequestState<SpecializationResponse>,recommendationDoctorState: null == recommendationDoctorState ? _self.recommendationDoctorState : recommendationDoctorState // ignore: cast_nullable_to_non_nullable
-as RequestState<Doctor>,
+as RequestState<SpecializationResponse>,doctors: null == doctors ? _self.doctors : doctors // ignore: cast_nullable_to_non_nullable
+as RequestState<List<Doctor>>,selectedSpecializationId: freezed == selectedSpecializationId ? _self.selectedSpecializationId : selectedSpecializationId // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 /// Create a copy of HomeState
@@ -82,10 +83,10 @@ $RequestStateCopyWith<SpecializationResponse, $Res> get doctorSpecialityState {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$RequestStateCopyWith<Doctor, $Res> get recommendationDoctorState {
+$RequestStateCopyWith<List<Doctor>, $Res> get doctors {
   
-  return $RequestStateCopyWith<Doctor, $Res>(_self.recommendationDoctorState, (value) {
-    return _then(_self.copyWith(recommendationDoctorState: value));
+  return $RequestStateCopyWith<List<Doctor>, $Res>(_self.doctors, (value) {
+    return _then(_self.copyWith(doctors: value));
   });
 }
 }
@@ -169,10 +170,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( RequestState<SpecializationResponse> doctorSpecialityState,  RequestState<Doctor> recommendationDoctorState)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( RequestState<SpecializationResponse> doctorSpecialityState,  RequestState<List<Doctor>> doctors,  int? selectedSpecializationId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _HomeState() when $default != null:
-return $default(_that.doctorSpecialityState,_that.recommendationDoctorState);case _:
+return $default(_that.doctorSpecialityState,_that.doctors,_that.selectedSpecializationId);case _:
   return orElse();
 
 }
@@ -190,10 +191,10 @@ return $default(_that.doctorSpecialityState,_that.recommendationDoctorState);cas
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( RequestState<SpecializationResponse> doctorSpecialityState,  RequestState<Doctor> recommendationDoctorState)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( RequestState<SpecializationResponse> doctorSpecialityState,  RequestState<List<Doctor>> doctors,  int? selectedSpecializationId)  $default,) {final _that = this;
 switch (_that) {
 case _HomeState():
-return $default(_that.doctorSpecialityState,_that.recommendationDoctorState);case _:
+return $default(_that.doctorSpecialityState,_that.doctors,_that.selectedSpecializationId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -210,10 +211,10 @@ return $default(_that.doctorSpecialityState,_that.recommendationDoctorState);cas
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( RequestState<SpecializationResponse> doctorSpecialityState,  RequestState<Doctor> recommendationDoctorState)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( RequestState<SpecializationResponse> doctorSpecialityState,  RequestState<List<Doctor>> doctors,  int? selectedSpecializationId)?  $default,) {final _that = this;
 switch (_that) {
 case _HomeState() when $default != null:
-return $default(_that.doctorSpecialityState,_that.recommendationDoctorState);case _:
+return $default(_that.doctorSpecialityState,_that.doctors,_that.selectedSpecializationId);case _:
   return null;
 
 }
@@ -225,11 +226,12 @@ return $default(_that.doctorSpecialityState,_that.recommendationDoctorState);cas
 
 
 class _HomeState implements HomeState {
-  const _HomeState({this.doctorSpecialityState = const InitialState(), this.recommendationDoctorState = const InitialState()});
+  const _HomeState({this.doctorSpecialityState = const InitialState(), this.doctors = const InitialState(), this.selectedSpecializationId});
   
 
 @override@JsonKey() final  RequestState<SpecializationResponse> doctorSpecialityState;
-@override@JsonKey() final  RequestState<Doctor> recommendationDoctorState;
+@override@JsonKey() final  RequestState<List<Doctor>> doctors;
+@override final  int? selectedSpecializationId;
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
@@ -241,16 +243,16 @@ _$HomeStateCopyWith<_HomeState> get copyWith => __$HomeStateCopyWithImpl<_HomeSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.doctorSpecialityState, doctorSpecialityState) || other.doctorSpecialityState == doctorSpecialityState)&&(identical(other.recommendationDoctorState, recommendationDoctorState) || other.recommendationDoctorState == recommendationDoctorState));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.doctorSpecialityState, doctorSpecialityState) || other.doctorSpecialityState == doctorSpecialityState)&&(identical(other.doctors, doctors) || other.doctors == doctors)&&(identical(other.selectedSpecializationId, selectedSpecializationId) || other.selectedSpecializationId == selectedSpecializationId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,doctorSpecialityState,recommendationDoctorState);
+int get hashCode => Object.hash(runtimeType,doctorSpecialityState,doctors,selectedSpecializationId);
 
 @override
 String toString() {
-  return 'HomeState(doctorSpecialityState: $doctorSpecialityState, recommendationDoctorState: $recommendationDoctorState)';
+  return 'HomeState(doctorSpecialityState: $doctorSpecialityState, doctors: $doctors, selectedSpecializationId: $selectedSpecializationId)';
 }
 
 
@@ -261,11 +263,11 @@ abstract mixin class _$HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Re
   factory _$HomeStateCopyWith(_HomeState value, $Res Function(_HomeState) _then) = __$HomeStateCopyWithImpl;
 @override @useResult
 $Res call({
- RequestState<SpecializationResponse> doctorSpecialityState, RequestState<Doctor> recommendationDoctorState
+ RequestState<SpecializationResponse> doctorSpecialityState, RequestState<List<Doctor>> doctors, int? selectedSpecializationId
 });
 
 
-@override $RequestStateCopyWith<SpecializationResponse, $Res> get doctorSpecialityState;@override $RequestStateCopyWith<Doctor, $Res> get recommendationDoctorState;
+@override $RequestStateCopyWith<SpecializationResponse, $Res> get doctorSpecialityState;@override $RequestStateCopyWith<List<Doctor>, $Res> get doctors;
 
 }
 /// @nodoc
@@ -278,11 +280,12 @@ class __$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? doctorSpecialityState = null,Object? recommendationDoctorState = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? doctorSpecialityState = null,Object? doctors = null,Object? selectedSpecializationId = freezed,}) {
   return _then(_HomeState(
 doctorSpecialityState: null == doctorSpecialityState ? _self.doctorSpecialityState : doctorSpecialityState // ignore: cast_nullable_to_non_nullable
-as RequestState<SpecializationResponse>,recommendationDoctorState: null == recommendationDoctorState ? _self.recommendationDoctorState : recommendationDoctorState // ignore: cast_nullable_to_non_nullable
-as RequestState<Doctor>,
+as RequestState<SpecializationResponse>,doctors: null == doctors ? _self.doctors : doctors // ignore: cast_nullable_to_non_nullable
+as RequestState<List<Doctor>>,selectedSpecializationId: freezed == selectedSpecializationId ? _self.selectedSpecializationId : selectedSpecializationId // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 
@@ -299,10 +302,10 @@ $RequestStateCopyWith<SpecializationResponse, $Res> get doctorSpecialityState {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$RequestStateCopyWith<Doctor, $Res> get recommendationDoctorState {
+$RequestStateCopyWith<List<Doctor>, $Res> get doctors {
   
-  return $RequestStateCopyWith<Doctor, $Res>(_self.recommendationDoctorState, (value) {
-    return _then(_self.copyWith(recommendationDoctorState: value));
+  return $RequestStateCopyWith<List<Doctor>, $Res>(_self.doctors, (value) {
+    return _then(_self.copyWith(doctors: value));
   });
 }
 }

@@ -38,10 +38,6 @@ Future<void> setUpServiceLocator() async {
     () => HomeRepoImpl(apiClient: getIt<ApiClient>()),
   );
 
-  // =====================
-  // CUBITS
-  // =====================
-
   getIt.registerFactory<LoginCubit>(() => LoginCubit(getIt<LoginRepo>()));
   getIt.registerFactory<HomeCubit>(() => HomeCubit(homeRepo: getIt<HomeRepo>()));
 
