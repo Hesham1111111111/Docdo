@@ -1,10 +1,11 @@
 import 'package:advanced/core/routing/rouets.dart';
 import 'package:advanced/features/auth/presention/views/login_view.dart';
 import 'package:advanced/features/auth/presention/views/register.dart';
-import 'package:advanced/features/home/presention/views/home_view.dart';
+import 'package:advanced/features/home/presention/views/widget/doctor_speciality/doctor_speciality_see_all_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../features/home/presention/views/home_view.dart';
 import '../../features/onboarding/presntation/views/onboarding_screen.dart';
 
 class AppRouter {
@@ -18,6 +19,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => HomeView());
       case Routes.signUpScreen:
         return MaterialPageRoute(builder: (_) => SignUp());
+      case Routes.doctorSpecialitySeeAll:
+        return MaterialPageRoute(builder: (_) => DoctorSpecialitySeeAllScreen());
       default:
         return MaterialPageRoute(
           builder: (_) =>

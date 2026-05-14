@@ -13,9 +13,7 @@ class RecommendationDoctorBloc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
-      buildWhen: (prev, curr) =>
-      prev.doctors != curr.doctors,
-
+      buildWhen: (prev, curr) => prev != curr,
       builder: (context, state) {
         return state.doctors.maybeWhen(
           loading: () => const RecommendationsDoctorShimmerList(),

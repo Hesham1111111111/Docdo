@@ -1,45 +1,79 @@
-import 'package:advanced/core/di/service_locator.dart';
-import 'package:advanced/core/helpers/spacing.dart';
-import 'package:advanced/features/home/presention/manager/home_cubit.dart';
-import 'package:advanced/features/home/presention/views/widget/doctor_blue_container.dart';
-import 'package:advanced/features/home/presention/views/widget/doctor_speciality/doctor_speciality_seeAll.dart';
-import 'package:advanced/features/home/presention/views/widget/doctor_speciality/doctor_specialty_bolc_.dart';
-import 'package:advanced/features/home/presention/views/widget/home_top_bar.dart';
-import 'package:advanced/features/home/presention/views/widget/recommendation_doctor/recommendation_doctor.dart';
-import 'package:advanced/features/home/presention/views/widget/recommendation_doctor/recommendation_doctor_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../chat/view/chat_screen.dart';
+import '../../../profile/view/profile_screen.dart';
+import 'home_screen.dart';
 
-class HomeView extends StatelessWidget {
-    const HomeView({super.key});
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  int index = 0;
+
+  final List<Widget> screens = [
+    const HomeScreen(),
+    const ChatScreen(),
+    Container(), // Search
+    Container(), // Schedule
+    const ProfileScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<HomeCubit>()..getDoctorSpecialities(),
+    return Scaffold(
+      body: screens[index],
 
-      child: Scaffold(
-        body: SafeArea(
-          child: Container(
-            width: double.infinity,
-            margin: EdgeInsets.fromLTRB(20.0, 16.0, 20.0, 28.0),
-            child: Column(
-              children: [
-                const HomeTopBar(),
-                const DoctorBlueContainer(),
-                vSpace(24),
-                const DoctorSpecialitySeeAll(),
-                vSpace(23),
-                DoctorSpecialtyBloc(),
-                const RecommendationDoctor(),
-                vSpace(12),
-                RecommendationDoctorBloc(),
-                SizedBox(height: 20.h),
-              ],
-            ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: index,
+        type: BottomNavigationBarType.fixed,
+
+        onTap: (value) {
+          setState(() {
+            index = value;
+          });
+        },
+
+        items: [
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: 'Home',
           ),
-        ),
+
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble_outline),
+            label: 'Chat',
+          ),
+
+          BottomNavigationBarItem(
+            icon: Container(
+              padding: const EdgeInsets.all(15),
+              decoration: const BoxDecoration(
+                color: Color(0xFF247CFF),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.search, color: Colors.white),
+            ),
+            label: '',
+          ),
+
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_month_outlined),
+            label: 'Schedule',
+          ),
+
+          const BottomNavigationBarItem(
+            icon: CircleAvatar(
+              radius: 12,
+              backgroundImage: NetworkImage(
+                'https://www.pngall.com/wp-content/uploads/5/Profile-PNG-High-Quality-Image.png',
+              ),
+            ),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }

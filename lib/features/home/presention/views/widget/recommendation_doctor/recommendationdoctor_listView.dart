@@ -6,18 +6,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class RecommendationDoctorListView extends StatelessWidget {
   final List<Doctor> doctor;
 
-  const RecommendationDoctorListView({super.key, required this.doctor});
+  const RecommendationDoctorListView({
+    super.key,
+    required this.doctor,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200.h,
-      child: ListView.builder(
-        itemCount: doctor.length,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) {
-          return RecommendationsDoctorItem(doctorsModel: doctor[index]);
-        },
+    return Column(
+      children: List.generate(
+        doctor.length,
+            (index) => RecommendationsDoctorItem(
+          doctorsModel: doctor[index],
+        ),
       ),
     );
   }
