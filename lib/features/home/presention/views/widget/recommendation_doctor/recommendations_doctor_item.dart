@@ -9,38 +9,55 @@ import '../../../../../../core/theming/app_stayle.dart';
 class RecommendationsDoctorItem extends StatelessWidget {
   final Doctor doctorsModel;
 
-  const RecommendationsDoctorItem({super.key, required this.doctorsModel});
+  const RecommendationsDoctorItem({
+    super.key,
+    required this.doctorsModel,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Row(
-          children: [
-            Column(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            AppImages.nurse,
+            width: 100.w,
+            height: 100.h,
+            fit: BoxFit.cover,
+          ),
+
+          hSpace(12),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(AppImages.nurse, width: 100.w, height: 100.h),
+                Text(
+                  doctorsModel.name,
+                  style: AppStyle.text18BlackBold,
+                ),
+
+                SizedBox(height: 4.h),
+
+                Text(
+                  '${doctorsModel.degree} | ${doctorsModel.phone}',
+                  style: AppStyle.text15PrimaryRegular.copyWith(
+                    color: AppColors.gry,
+                  ),
+                ),
+
+                SizedBox(height: 4.h),
+
+                Text(
+                  doctorsModel.email,
+                  style: AppStyle.text14GryRegular,
+                ),
               ],
             ),
-            hSpace(12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(doctorsModel.name, style: AppStyle.text18BlackBold),
-                  Text(
-                    ' ${doctorsModel.degree} | ${doctorsModel.phone}',
-                    style: AppStyle.text15PrimaryRegular.copyWith(
-                      color: AppColors.gry,
-                    ),
-                  ),
-                  Text(doctorsModel.email, style: AppStyle.text14GryRegular),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

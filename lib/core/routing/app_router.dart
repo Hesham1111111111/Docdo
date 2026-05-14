@@ -1,11 +1,11 @@
 import 'package:advanced/core/routing/rouets.dart';
 import 'package:advanced/features/auth/presention/views/login_view.dart';
 import 'package:advanced/features/auth/presention/views/register.dart';
-import 'package:advanced/features/home/presention/views/home_view.dart';
 import 'package:advanced/features/home/presention/views/widget/doctor_speciality/doctor_speciality_see_all_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../features/home/presention/views/home_view.dart';
 import '../../features/onboarding/presntation/views/onboarding_screen.dart';
 
 class AppRouter {

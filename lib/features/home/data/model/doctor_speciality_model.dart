@@ -70,7 +70,7 @@ class Doctor {
       name: json['name'] ?? '',
       email: json['email'] ?? '',
       phone: json['phone'] ?? '',
-      photo: json['photo'] ?? '', // 🔥 مهم
+      photo: json['photo'] ?? '',
       gender: json['gender'] ?? '',
       address: json['address'] ?? '',
       description: json['description'],
